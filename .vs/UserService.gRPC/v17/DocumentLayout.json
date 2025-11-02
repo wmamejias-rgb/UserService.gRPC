@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|d:\\varios\\cursos\\microservicios resilentes\\clase 1\\tarea 1\\userservice.grpc\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|solutionrelative:readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|d:\\varios\\cursos\\microservicios resilentes\\clase 1\\tarea 1\\userservice.grpc\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|d:\\varios\\cursos\\microservicios resilentes\\clase 1\\tarea 1\\userservice.grpc\\protos\\user_service.proto||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|solutionrelative:protos\\user_service.proto||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|d:\\varios\\cursos\\microservicios resilentes\\clase 1\\tarea 1\\userservice.grpc\\docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|solutionrelative:docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|d:\\varios\\cursos\\microservicios resilentes\\clase 1\\tarea 1\\userservice.grpc\\data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|solutionrelative:data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|d:\\varios\\cursos\\microservicios resilentes\\clase 1\\tarea 1\\userservice.grpc\\services\\usergrpcservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|solutionrelative:services\\usergrpcservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|d:\\varios\\cursos\\microservicios resilentes\\clase 1\\tarea 1\\userservice.grpc\\protos\\user_service.proto||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|solutionrelative:protos\\user_service.proto||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8B4EFC48-0C60-4C37-84E5-A6E991D0947A}|UserService.gRPC.csproj|d:\\varios\\cursos\\microservicios resilentes\\clase 1\\tarea 1\\userservice.grpc\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,20 +86,63 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "README.md",
+              "DocumentMoniker": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\README.md",
+              "RelativeDocumentMoniker": "README.md",
+              "ToolTip": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\README.md",
+              "RelativeToolTip": "README.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-11-02T20:51:49.676Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "docker-compose.yml",
+              "DocumentMoniker": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\docker-compose.yml",
+              "RelativeDocumentMoniker": "docker-compose.yml",
+              "ToolTip": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\docker-compose.yml",
+              "RelativeToolTip": "docker-compose.yml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2025-11-02T20:21:43.513Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-02T20:19:55.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "user_service.proto",
               "DocumentMoniker": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\Protos\\user_service.proto",
               "RelativeDocumentMoniker": "Protos\\user_service.proto",
               "ToolTip": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\Protos\\user_service.proto",
               "RelativeToolTip": "Protos\\user_service.proto",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003853|",
               "WhenOpened": "2025-11-02T16:48:12.203Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "UserGrpcService.cs",
               "DocumentMoniker": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\Services\\UserGrpcService.cs",
               "RelativeDocumentMoniker": "Services\\UserGrpcService.cs",
@@ -95,12 +150,11 @@
               "RelativeToolTip": "Services\\UserGrpcService.cs",
               "ViewState": "AgIAAK0AAAAAAAAAAAAqwFwBAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-02T16:32:20.098Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-02T16:32:20.098Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "UserValidator.cs",
               "DocumentMoniker": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\Validators\\UserValidator.cs",
               "RelativeDocumentMoniker": "Validators\\UserValidator.cs",
@@ -108,12 +162,11 @@
               "RelativeToolTip": "Validators\\UserValidator.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAACMAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-02T16:28:29.267Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-02T16:28:29.267Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "User.cs",
               "DocumentMoniker": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\Models\\User.cs",
               "RelativeDocumentMoniker": "Models\\User.cs",
@@ -121,12 +174,11 @@
               "RelativeToolTip": "Models\\User.cs",
               "ViewState": "AgIAABQAAAAAAAAAAAAcwBgAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-02T16:25:48.649Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-02T16:25:48.649Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "DbInitializer.cs",
               "DocumentMoniker": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\Data\\DbInitializer.cs",
               "RelativeDocumentMoniker": "Data\\DbInitializer.cs",
@@ -134,12 +186,11 @@
               "RelativeToolTip": "Data\\DbInitializer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEEAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-02T16:24:02.004Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-02T16:24:02.004Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "UserDbContext.cs",
               "DocumentMoniker": "D:\\VARIOS\\CURSOS\\MICROSERVICIOS RESILENTES\\Clase 1\\Tarea 1\\UserService.gRPC\\Data\\UserDbContext.cs",
               "RelativeDocumentMoniker": "Data\\UserDbContext.cs",
@@ -147,8 +198,7 @@
               "RelativeToolTip": "Data\\UserDbContext.cs",
               "ViewState": "AgIAACYAAAAAAAAAAAAgwC8AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-02T16:23:47.359Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-02T16:23:47.359Z"
             }
           ]
         },
