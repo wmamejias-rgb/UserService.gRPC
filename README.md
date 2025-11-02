@@ -26,7 +26,7 @@ grpcurl -plaintext -d '{\"email\": \"john@gmail.com\", \"first_name\": \"John\",
 
 Actualiza un usuario en particular:
 
-UserService.gRPC> grpcurl -plaintext -d '{\"id\":4 , \"email\": \"john@gmail.com\", \"first_name\": \"John\", \"last_name\": \"Smith\", \"role\": \"Premium\"}' localhost:7002 userservice.UserService/UpdateUser
+grpcurl -plaintext -d '{\"id\":4 , \"email\": \"john@gmail.com\", \"first_name\": \"John\", \"last_name\": \"Smith\", \"role\": \"Premium\"}' localhost:7002 userservice.UserService/UpdateUser
 
 Eliminado lógico de un usuario por su id:
 
