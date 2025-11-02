@@ -21,6 +21,9 @@ rpc UpdateUser(UpdateUserRequest) returns (UserResponse);
 //Elimina un usuario específico de forma lógica / Unary
 rpc DeleteUser(DeleteUserRequest)  returns (DeleteUserResponse);
 
+//Busca usuarios por email o nombre // Server Streaming
+rpc SearchUsers(SearchUsersRequest)  return (stream UserResponse);
+
 
 }
 
@@ -71,4 +74,10 @@ message DeleteUserRequest {
 message DeleteUserResponse {
   bool success = 1;
   string message = 2;
+}
+
+message SearchUsersRequest {
+    string search_term = 1 ;
+    int32 page_number = 2;
+    int32 page_size = 3;
 }

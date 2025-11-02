@@ -20,6 +20,7 @@ namespace UserService.gRPC.Services
         private readonly IValidator<CreateUserRequest> _createUserValidator;
         private readonly IValidator<UpdateUserRequest> _updateUserValidator;
         private readonly IValidator<DeleteUserRequest> _deleteUserValidator;
+        private readonly IValidator<SearchUsersRequest> _searchUserValidator;
 
 
         public UserGrpcService(

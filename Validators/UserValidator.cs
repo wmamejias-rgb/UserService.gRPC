@@ -100,4 +100,26 @@ namespace UserService.gRPC.Validators
         }
 
     }
+
+
+    public class SearchUsersRequestValidator : AbstractValidator<SearchUsersRequest>
+    {
+
+        public SearchUsersRequestValidator()
+        {
+
+            RuleFor(x => x.SearchTerm)
+               .NotEmpty().WithMessage("El término de búsqueda es requerido")
+               .MinimumLength(2).WithMessage("El término de búsqueda debe tener al menos 2 caracteres")
+               .MaximumLength(100).WithMessage("El término de búsqueda no puede exceder 100 caracteres");
+
+            RuleFor(x => x.PageNumber)
+                .GreaterThan(0).WithMessage("El número de página debe ser mayor a cero");
+
+            RuleFor(x => x.PageSize)
+                .GreaterThan(0).WithMessage("El tamaño de página debe ser mayor a cero")
+                .LessThanOrEqualTo(100).WithMessage("El tamaño de página no puede exceder 100 elementos");
+        }
+
+    }
 }
