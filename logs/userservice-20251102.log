@@ -1,0 +1,1699 @@
+2025-11-02 04:15:25.838 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 04:15:26.326 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 04:15:27.763 +00:00 [INF] Executed DbCommand (406ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [ECommerceGRPC];
+2025-11-02 04:15:27.981 +00:00 [INF] Executed DbCommand (210ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [ECommerceGRPC] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2025-11-02 04:15:28.012 +00:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 04:15:28.087 +00:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [Email] nvarchar(50) NOT NULL,
+    [FirstName] nvarchar(100) NOT NULL,
+    [LastName] nvarchar(100) NOT NULL,
+    [PasswordHash] nvarchar(5) NOT NULL,
+    [Role] nvarchar(50) NOT NULL,
+    [CreatedAt] datetime2 NOT NULL DEFAULT (GETUTCDATE()),
+    [LastLogin] datetime2 NULL,
+    [IsActive] bit NOT NULL DEFAULT CAST(1 AS bit),
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+2025-11-02 04:15:28.091 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_Email] ON [Users] ([Email]);
+2025-11-02 04:15:28.094 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_IsActive] ON [Users] ([IsActive]);
+2025-11-02 04:15:28.097 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_Role] ON [Users] ([Role]);
+2025-11-02 04:15:28.125 +00:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 04:15:28.139 +00:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 04:15:28.368 +00:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 04:15:28.389 +00:00 [INF] Inicializando base de datos con datos de prueba...
+2025-11-02 04:15:28.583 +00:00 [INF] Executed DbCommand (26ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (Size = 50), @p2='?' (Size = 100), @p3='?' (DbType = DateTime2), @p4='?' (Size = 100), @p5='?' (Size = 5), @p6='?' (Size = 50), @p7='?' (DbType = DateTime2), @p8='?' (Size = 50), @p9='?' (Size = 100), @p10='?' (DbType = DateTime2), @p11='?' (Size = 100), @p12='?' (Size = 5), @p13='?' (Size = 50), @p14='?' (DbType = DateTime2), @p15='?' (Size = 50), @p16='?' (Size = 100), @p17='?' (DbType = DateTime2), @p18='?' (Size = 100), @p19='?' (Size = 5), @p20='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [Users] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, 0),
+(@p7, @p8, @p9, @p10, @p11, @p12, @p13, 1),
+(@p14, @p15, @p16, @p17, @p18, @p19, @p20, 2)) AS i ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role])
+VALUES (i.[CreatedAt], i.[Email], i.[FirstName], i.[LastLogin], i.[LastName], i.[PasswordHash], i.[Role])
+OUTPUT INSERTED.[Id], INSERTED.[IsActive], i._Position;
+2025-11-02 04:15:28.608 +00:00 [INF] Base de datos inicializada exitosamente con 3 usuarios.
+2025-11-02 04:15:28.636 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 04:15:28.648 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 04:15:28.692 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 04:15:28.713 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 04:15:28.715 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 04:15:28.716 +00:00 [INF] Hosting environment: Development
+2025-11-02 04:15:28.717 +00:00 [INF] Content root path: /app
+2025-11-02 04:17:59.478 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 04:17:59.537 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 04:17:59.540 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 04:17:59.545 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 04:17:59.548 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 71.1333ms
+2025-11-02 04:17:59.553 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 04:17:59.555 +00:00 [INF] Connection id "0HNGPOR7A722L", Request id "0HNGPOR7A722L:00000001": the application completed without reading the entire request body.
+2025-11-02 04:17:59.556 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 04:17:59.659 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/GetUser - application/grpc null
+2025-11-02 04:17:59.660 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/GetUser'
+2025-11-02 04:17:59.682 +00:00 [INF] GetUser llamado para ID: 1
+2025-11-02 04:17:59.789 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_Id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__request_Id_0
+2025-11-02 04:17:59.799 +00:00 [INF] Usuario Wendy encontrado exitosamente
+2025-11-02 04:17:59.806 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/GetUser'
+2025-11-02 04:17:59.811 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/GetUser - 200 null application/grpc 151.3802ms
+2025-11-02 04:17:59.815 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 04:17:59.816 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 262.1173ms
+2025-11-02 05:18:32.041 +00:00 [INF] Application is shutting down...
+2025-11-02 15:54:58.785 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 15:54:59.272 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 15:55:00.348 +00:00 [INF] Executed DbCommand (52ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 15:55:00.451 +00:00 [INF] Executed DbCommand (65ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2025-11-02 15:55:00.474 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 15:55:00.481 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 15:55:00.803 +00:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 15:55:00.826 +00:00 [INF] Base de datos ya contiene usuarios. Omitiendo inicialización.
+2025-11-02 15:55:00.860 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 15:55:00.872 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 15:55:00.915 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 15:55:00.927 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 15:55:00.928 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 15:55:00.933 +00:00 [INF] Hosting environment: Development
+2025-11-02 15:55:00.933 +00:00 [INF] Content root path: /app
+2025-11-02 15:55:55.837 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 15:55:55.870 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 15:55:55.873 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 15:55:55.878 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 15:55:55.881 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 45.7332ms
+2025-11-02 15:55:55.886 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 15:55:55.888 +00:00 [INF] Connection id "0HNGQ517E8K31", Request id "0HNGQ517E8K31:00000001": the application completed without reading the entire request body.
+2025-11-02 15:55:55.889 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 15:55:56.001 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 15:55:56.003 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 116.8946ms
+2025-11-02 16:00:06.887 +00:00 [INF] Application is shutting down...
+2025-11-02 16:00:08.567 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 16:00:08.989 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 16:00:10.031 +00:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:00:10.085 +00:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2025-11-02 16:00:10.100 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:00:10.108 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 16:00:10.344 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 16:00:10.363 +00:00 [INF] Base de datos ya contiene usuarios. Omitiendo inicialización.
+2025-11-02 16:00:10.390 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 16:00:10.404 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 16:00:10.447 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 16:00:10.461 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 16:00:10.462 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 16:00:10.463 +00:00 [INF] Hosting environment: Development
+2025-11-02 16:00:10.464 +00:00 [INF] Content root path: /app
+2025-11-02 16:00:47.993 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:00:48.038 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:00:48.041 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:00:48.045 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:00:48.048 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 57.4758ms
+2025-11-02 16:00:48.053 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:00:48.056 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:00:48.239 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:00:48.241 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 187.8886ms
+2025-11-02 16:00:55.181 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:00:55.183 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:00:55.184 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:00:55.185 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:00:55.187 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 5.835ms
+2025-11-02 16:00:55.192 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:00:55.193 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:00:55.198 +00:00 [INF] Connection id "0HNGQ53UGIHPF", Request id "0HNGQ53UGIHPF:00000001": the application completed without reading the entire request body.
+2025-11-02 16:00:55.205 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:00:55.206 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 14.3511ms
+2025-11-02 16:02:50.104 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:02:50.105 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:02:50.106 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:02:50.107 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:02:50.108 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 4.2013ms
+2025-11-02 16:02:50.109 +00:00 [INF] Connection id "0HNGQ53UGIHPG", Request id "0HNGQ53UGIHPG:00000001": the application completed without reading the entire request body.
+2025-11-02 16:02:50.111 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:02:50.112 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:02:50.119 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:02:50.122 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 10.9349ms
+2025-11-02 16:03:40.348 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:03:40.349 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:03:40.350 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:03:40.351 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:03:40.351 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 3.3679ms
+2025-11-02 16:03:40.352 +00:00 [INF] Connection id "0HNGQ53UGIHPH", Request id "0HNGQ53UGIHPH:00000001": the application completed without reading the entire request body.
+2025-11-02 16:03:40.357 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:03:40.358 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:03:40.372 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:03:40.374 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 16.6568ms
+2025-11-02 16:04:41.355 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:04:41.356 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:04:41.356 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:04:41.357 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:04:41.358 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 3.0466ms
+2025-11-02 16:04:41.359 +00:00 [INF] Connection id "0HNGQ53UGIHPI", Request id "0HNGQ53UGIHPI:00000001": the application completed without reading the entire request body.
+2025-11-02 16:04:41.360 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:04:41.361 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:04:41.366 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/GetUser - application/grpc null
+2025-11-02 16:04:41.367 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/GetUser'
+2025-11-02 16:04:41.416 +00:00 [INF] GetUser llamado para ID: 1
+2025-11-02 16:04:41.597 +00:00 [INF] Executed DbCommand (27ms) [Parameters=[@__request_Id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__request_Id_0
+2025-11-02 16:04:41.683 +00:00 [INF] Usuario Wendy encontrado exitosamente
+2025-11-02 16:04:41.692 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/GetUser'
+2025-11-02 16:04:41.698 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:04:41.700 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 339.3279ms
+2025-11-02 16:04:41.704 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/GetUser - 200 null application/grpc 338.0499ms
+2025-11-02 16:09:25.670 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:09:25.671 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:09:25.672 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:09:25.672 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:09:25.673 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 2.865ms
+2025-11-02 16:09:25.673 +00:00 [INF] Connection id "0HNGQ53UGIHPJ", Request id "0HNGQ53UGIHPJ:00000001": the application completed without reading the entire request body.
+2025-11-02 16:09:25.676 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:09:25.677 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:09:25.681 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:09:25.682 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 6.3381ms
+2025-11-02 16:09:53.478 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:09:53.479 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:09:53.480 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:09:53.481 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:09:53.481 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 2.8477ms
+2025-11-02 16:09:53.482 +00:00 [INF] Connection id "0HNGQ53UGIHPK", Request id "0HNGQ53UGIHPK:00000001": the application completed without reading the entire request body.
+2025-11-02 16:09:53.483 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:09:53.484 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:09:53.487 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/GetUsers - application/grpc null
+2025-11-02 16:09:53.489 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/GetUsers'
+2025-11-02 16:09:53.499 +00:00 [INF] GetUser llamado con paginación: Página=1, Tamaño=10
+2025-11-02 16:09:53.565 +00:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-11-02 16:09:53.567 +00:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-11-02 16:09:53.744 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+ORDER BY (SELECT 1)
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2025-11-02 16:09:53.747 +00:00 [INF] Se encontraron 3 usuarios
+2025-11-02 16:09:53.748 +00:00 [INF] GetUsers completado - 3 usuarios enviados
+2025-11-02 16:09:53.750 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/GetUsers'
+2025-11-02 16:09:53.751 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/GetUsers - 200 null application/grpc 263.3809ms
+2025-11-02 16:09:53.752 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:09:53.753 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 269.5206ms
+2025-11-02 16:10:10.388 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:10:10.389 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:10:10.389 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:10:10.390 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:10:10.390 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 1.8729ms
+2025-11-02 16:10:10.391 +00:00 [INF] Connection id "0HNGQ53UGIHPL", Request id "0HNGQ53UGIHPL:00000001": the application completed without reading the entire request body.
+2025-11-02 16:10:10.392 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:10:10.392 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:10:10.396 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/GetUsers - application/grpc null
+2025-11-02 16:10:10.396 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/GetUsers'
+2025-11-02 16:10:10.400 +00:00 [INF] GetUser llamado con paginación: Página=1, Tamaño=10
+2025-11-02 16:10:10.404 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+ORDER BY (SELECT 1)
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2025-11-02 16:10:10.406 +00:00 [INF] Se encontraron 3 usuarios
+2025-11-02 16:10:10.407 +00:00 [INF] GetUsers completado - 3 usuarios enviados
+2025-11-02 16:10:10.407 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/GetUsers'
+2025-11-02 16:10:10.408 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/GetUsers - 200 null application/grpc 12.3001ms
+2025-11-02 16:10:10.409 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:10:10.410 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 18.2455ms
+2025-11-02 16:16:00.184 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:16:00.185 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:16:00.185 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:16:00.186 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:16:00.186 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 2.7835ms
+2025-11-02 16:16:00.187 +00:00 [INF] Connection id "0HNGQ53UGIHPM", Request id "0HNGQ53UGIHPM:00000001": the application completed without reading the entire request body.
+2025-11-02 16:16:00.189 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:16:00.189 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:16:00.194 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:16:00.195 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 5.8457ms
+2025-11-02 16:17:33.102 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:17:33.103 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:17:33.104 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:17:33.104 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:17:33.105 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 3.0406ms
+2025-11-02 16:17:33.106 +00:00 [INF] Connection id "0HNGQ53UGIHPN", Request id "0HNGQ53UGIHPN:00000001": the application completed without reading the entire request body.
+2025-11-02 16:17:33.107 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:17:33.108 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:17:33.112 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - application/grpc null
+2025-11-02 16:17:33.113 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:17:33.118 +00:00 [INF] CreateUser llamado para: john@gmail.com
+2025-11-02 16:17:33.130 +00:00 [WRN] Validación fallida: Password es requerido, Password debe ser de al meno 8 caracteres
+2025-11-02 16:17:33.140 +00:00 [INF] Error status code '"InvalidArgument"' with detail 'Password es requerido, Password debe ser de al meno 8 caracteres' raised.
+2025-11-02 16:17:33.141 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:17:33.142 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - 200 0 application/grpc 29.9602ms
+2025-11-02 16:17:33.151 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:17:33.151 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 44.1475ms
+2025-11-02 16:19:12.586 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:19:12.587 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:19:12.588 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:19:12.589 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:19:12.589 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 3.4844ms
+2025-11-02 16:19:12.590 +00:00 [INF] Connection id "0HNGQ53UGIHPO", Request id "0HNGQ53UGIHPO:00000001": the application completed without reading the entire request body.
+2025-11-02 16:19:12.592 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:19:12.592 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:19:12.598 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - application/grpc null
+2025-11-02 16:19:12.598 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:19:12.600 +00:00 [INF] CreateUser llamado para: john@gmail.com
+2025-11-02 16:19:12.601 +00:00 [WRN] Validación fallida: Password debe ser de al meno 8 caracteres
+2025-11-02 16:19:12.602 +00:00 [INF] Error status code '"InvalidArgument"' with detail 'Password debe ser de al meno 8 caracteres' raised.
+2025-11-02 16:19:12.603 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:19:12.604 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - 200 0 application/grpc 6.4486ms
+2025-11-02 16:19:12.611 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:19:12.612 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 20.1157ms
+2025-11-02 16:19:23.131 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:19:23.131 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:19:23.132 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:19:23.133 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:19:23.135 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 4.5887ms
+2025-11-02 16:19:23.136 +00:00 [INF] Connection id "0HNGQ53UGIHPP", Request id "0HNGQ53UGIHPP:00000001": the application completed without reading the entire request body.
+2025-11-02 16:19:23.137 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:19:23.137 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:19:23.144 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - application/grpc null
+2025-11-02 16:19:23.144 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:19:23.145 +00:00 [INF] CreateUser llamado para: john@gmail.com
+2025-11-02 16:19:23.348 +00:00 [INF] Executed DbCommand (11ms) [Parameters=[@__request_Email_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__request_Email_0
+2025-11-02 16:19:23.918 +00:00 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (Size = 50), @p2='?' (Size = 100), @p3='?' (DbType = DateTime2), @p4='?' (Size = 100), @p5='?' (Size = 4000), @p6='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role])
+OUTPUT INSERTED.[Id], INSERTED.[IsActive]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-11-02 16:19:23.953 +00:00 [ERR] An exception occurred in the database while saving changes for context type 'UserService.gRPC.Data.UserDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$1'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:41293763-9025-43fc-b469-007b2148e38a
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$1'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:41293763-9025-43fc-b469-007b2148e38a
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-11-02 16:19:23.957 +00:00 [ERR] Error al crear usuario.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$1'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:41293763-9025-43fc-b469-007b2148e38a
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at UserService.gRPC.Services.UserGrpcService.CreateUser(CreateUserRequest request, ServerCallContext context) in /src/Services/UserGrpcService.cs:line 210
+2025-11-02 16:19:23.964 +00:00 [INF] Error status code '"Internal"' with detail 'Error interno al procesar la solicitud' raised.
+2025-11-02 16:19:23.964 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:19:23.965 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - 200 0 application/grpc 821.3015ms
+2025-11-02 16:19:23.967 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:19:23.967 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 830.2703ms
+2025-11-02 16:22:33.013 +00:00 [INF] Application is shutting down...
+2025-11-02 16:22:34.531 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 16:22:35.057 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 16:22:36.145 +00:00 [INF] Executed DbCommand (55ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:22:36.194 +00:00 [INF] Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2025-11-02 16:22:36.209 +00:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:22:36.217 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 16:22:36.585 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 16:22:36.612 +00:00 [INF] Base de datos ya contiene usuarios. Omitiendo inicialización.
+2025-11-02 16:22:36.664 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 16:22:36.689 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 16:22:36.768 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 16:22:36.798 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 16:22:36.800 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 16:22:36.802 +00:00 [INF] Hosting environment: Development
+2025-11-02 16:22:36.803 +00:00 [INF] Content root path: /app
+2025-11-02 16:22:40.478 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:22:40.519 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:22:40.522 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:22:40.526 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:22:40.529 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 53.6745ms
+2025-11-02 16:22:40.538 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:22:40.542 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:22:40.638 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - application/grpc null
+2025-11-02 16:22:40.639 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:22:40.674 +00:00 [INF] CreateUser llamado para: john@gmail.com
+2025-11-02 16:22:40.807 +00:00 [INF] Executed DbCommand (11ms) [Parameters=[@__request_Email_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__request_Email_0
+2025-11-02 16:22:41.250 +00:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (Size = 50), @p2='?' (Size = 100), @p3='?' (DbType = DateTime2), @p4='?' (Size = 100), @p5='?' (Size = 4000), @p6='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role])
+OUTPUT INSERTED.[Id], INSERTED.[IsActive]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-11-02 16:22:41.303 +00:00 [ERR] An exception occurred in the database while saving changes for context type 'UserService.gRPC.Data.UserDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$1'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:5ef8c568-8fea-4c6d-9726-fac292ce0fb9
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$1'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:5ef8c568-8fea-4c6d-9726-fac292ce0fb9
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-11-02 16:22:41.310 +00:00 [ERR] Error al crear usuario.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$1'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:5ef8c568-8fea-4c6d-9726-fac292ce0fb9
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at UserService.gRPC.Services.UserGrpcService.CreateUser(CreateUserRequest request, ServerCallContext context) in /src/Services/UserGrpcService.cs:line 210
+2025-11-02 16:22:41.339 +00:00 [INF] Error status code '"Internal"' with detail 'Error interno al procesar la solicitud' raised.
+2025-11-02 16:22:41.343 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:22:41.355 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - 200 0 application/grpc 716.2335ms
+2025-11-02 16:22:41.361 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:22:41.362 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 824.0773ms
+2025-11-02 16:24:42.372 +00:00 [INF] Application is shutting down...
+2025-11-02 16:25:22.498 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 16:25:22.818 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 16:25:23.605 +00:00 [INF] Executed DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:25:23.670 +00:00 [INF] Executed DbCommand (44ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2025-11-02 16:25:23.685 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:25:23.691 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 16:25:24.101 +00:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 16:25:24.133 +00:00 [INF] Base de datos ya contiene usuarios. Omitiendo inicialización.
+2025-11-02 16:25:24.179 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 16:25:24.196 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 16:25:24.236 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 16:25:24.246 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 16:25:24.247 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 16:25:24.248 +00:00 [INF] Hosting environment: Development
+2025-11-02 16:25:24.248 +00:00 [INF] Content root path: /app
+2025-11-02 16:26:30.576 +00:00 [INF] Application is shutting down...
+2025-11-02 16:27:02.527 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 16:27:02.955 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 16:27:04.004 +00:00 [INF] Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:27:04.122 +00:00 [INF] Executed DbCommand (90ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2025-11-02 16:27:04.144 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:27:04.155 +00:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 16:27:04.587 +00:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 16:27:04.607 +00:00 [INF] Base de datos ya contiene usuarios. Omitiendo inicialización.
+2025-11-02 16:27:04.645 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 16:27:04.668 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 16:27:04.711 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 16:27:04.725 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 16:27:04.725 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 16:27:04.726 +00:00 [INF] Hosting environment: Development
+2025-11-02 16:27:04.727 +00:00 [INF] Content root path: /app
+2025-11-02 16:27:39.861 +00:00 [INF] Application is shutting down...
+2025-11-02 16:27:41.528 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 16:27:42.122 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 16:27:43.580 +00:00 [INF] Executed DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:27:43.645 +00:00 [INF] Executed DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2025-11-02 16:27:43.672 +00:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:27:43.682 +00:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 16:27:43.980 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 16:27:44.000 +00:00 [INF] Base de datos ya contiene usuarios. Omitiendo inicialización.
+2025-11-02 16:27:44.044 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 16:27:44.063 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 16:27:44.100 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 16:27:44.110 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 16:27:44.111 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 16:27:44.111 +00:00 [INF] Hosting environment: Development
+2025-11-02 16:27:44.112 +00:00 [INF] Content root path: /app
+2025-11-02 16:29:20.353 +00:00 [INF] Application is shutting down...
+2025-11-02 16:30:21.290 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 16:30:21.615 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 16:30:23.040 +00:00 [INF] Executed DbCommand (407ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [ECommerceGRPC];
+2025-11-02 16:30:23.226 +00:00 [INF] Executed DbCommand (179ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [ECommerceGRPC] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2025-11-02 16:30:23.269 +00:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:30:23.361 +00:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [Email] nvarchar(50) NOT NULL,
+    [FirstName] nvarchar(100) NOT NULL,
+    [LastName] nvarchar(100) NOT NULL,
+    [PasswordHash] nvarchar(8) NOT NULL,
+    [Role] nvarchar(50) NOT NULL,
+    [CreatedAt] datetime2 NOT NULL DEFAULT (GETUTCDATE()),
+    [LastLogin] datetime2 NULL,
+    [IsActive] bit NOT NULL DEFAULT CAST(1 AS bit),
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+2025-11-02 16:30:23.366 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_Email] ON [Users] ([Email]);
+2025-11-02 16:30:23.368 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_IsActive] ON [Users] ([IsActive]);
+2025-11-02 16:30:23.373 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_Role] ON [Users] ([Role]);
+2025-11-02 16:30:23.408 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:30:23.422 +00:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 16:30:23.654 +00:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 16:30:23.696 +00:00 [INF] Inicializando base de datos con datos de prueba...
+2025-11-02 16:30:23.947 +00:00 [INF] Executed DbCommand (26ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (Size = 50), @p2='?' (Size = 100), @p3='?' (DbType = DateTime2), @p4='?' (Size = 100), @p5='?' (Size = 8), @p6='?' (Size = 50), @p7='?' (DbType = DateTime2), @p8='?' (Size = 50), @p9='?' (Size = 100), @p10='?' (DbType = DateTime2), @p11='?' (Size = 100), @p12='?' (Size = 8), @p13='?' (Size = 50), @p14='?' (DbType = DateTime2), @p15='?' (Size = 50), @p16='?' (Size = 100), @p17='?' (DbType = DateTime2), @p18='?' (Size = 100), @p19='?' (Size = 8), @p20='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [Users] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, 0),
+(@p7, @p8, @p9, @p10, @p11, @p12, @p13, 1),
+(@p14, @p15, @p16, @p17, @p18, @p19, @p20, 2)) AS i ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role])
+VALUES (i.[CreatedAt], i.[Email], i.[FirstName], i.[LastLogin], i.[LastName], i.[PasswordHash], i.[Role])
+OUTPUT INSERTED.[Id], INSERTED.[IsActive], i._Position;
+2025-11-02 16:30:23.973 +00:00 [INF] Base de datos inicializada exitosamente con 3 usuarios.
+2025-11-02 16:30:24.001 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 16:30:24.014 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 16:30:24.042 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 16:30:24.052 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 16:30:24.053 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 16:30:24.053 +00:00 [INF] Hosting environment: Development
+2025-11-02 16:30:24.054 +00:00 [INF] Content root path: /app
+2025-11-02 16:30:53.674 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:30:53.730 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:30:53.733 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:30:53.737 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:30:53.740 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 68.2787ms
+2025-11-02 16:30:53.745 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:30:53.748 +00:00 [INF] Connection id "0HNGQ5KOKO9CU", Request id "0HNGQ5KOKO9CU:00000001": the application completed without reading the entire request body.
+2025-11-02 16:30:53.749 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:30:53.857 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - application/grpc null
+2025-11-02 16:30:53.858 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:30:53.901 +00:00 [INF] CreateUser llamado para: john@gmail.com
+2025-11-02 16:30:54.043 +00:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_Email_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__request_Email_0
+2025-11-02 16:30:54.520 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (Size = 50), @p2='?' (Size = 100), @p3='?' (DbType = DateTime2), @p4='?' (Size = 100), @p5='?' (Size = 4000), @p6='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role])
+OUTPUT INSERTED.[Id], INSERTED.[IsActive]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-11-02 16:30:54.542 +00:00 [ERR] An exception occurred in the database while saving changes for context type 'UserService.gRPC.Data.UserDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$11$A'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:e9da33a3-8d8c-4d9f-afc2-ee9c4a87f37c
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$11$A'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:e9da33a3-8d8c-4d9f-afc2-ee9c4a87f37c
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-11-02 16:30:54.547 +00:00 [ERR] Error al crear usuario.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$11$A'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:e9da33a3-8d8c-4d9f-afc2-ee9c4a87f37c
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at UserService.gRPC.Services.UserGrpcService.CreateUser(CreateUserRequest request, ServerCallContext context) in /src/Services/UserGrpcService.cs:line 210
+2025-11-02 16:30:54.569 +00:00 [INF] Error status code '"Internal"' with detail 'Error interno al procesar la solicitud' raised.
+2025-11-02 16:30:54.572 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:30:54.578 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - 200 0 application/grpc 721.244ms
+2025-11-02 16:30:54.584 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:30:54.585 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 839.8225ms
+2025-11-02 16:37:27.378 +00:00 [INF] Application is shutting down...
+2025-11-02 16:37:50.626 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 16:37:50.993 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 16:37:53.017 +00:00 [INF] Executed DbCommand (500ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [ECommerceGRPC];
+2025-11-02 16:37:53.253 +00:00 [INF] Executed DbCommand (228ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [ECommerceGRPC] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2025-11-02 16:37:53.299 +00:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:37:53.449 +00:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [Email] nvarchar(50) NOT NULL,
+    [FirstName] nvarchar(100) NOT NULL,
+    [LastName] nvarchar(100) NOT NULL,
+    [PasswordHash] nvarchar(8) NOT NULL,
+    [Role] nvarchar(50) NOT NULL,
+    [CreatedAt] datetime2 NOT NULL DEFAULT (GETUTCDATE()),
+    [LastLogin] datetime2 NULL,
+    [IsActive] bit NOT NULL DEFAULT CAST(1 AS bit),
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+2025-11-02 16:37:53.454 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_Email] ON [Users] ([Email]);
+2025-11-02 16:37:53.458 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_IsActive] ON [Users] ([IsActive]);
+2025-11-02 16:37:53.462 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_Role] ON [Users] ([Role]);
+2025-11-02 16:37:53.512 +00:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:37:53.536 +00:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 16:37:53.943 +00:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 16:37:53.988 +00:00 [INF] Inicializando base de datos con datos de prueba...
+2025-11-02 16:37:54.273 +00:00 [INF] Executed DbCommand (23ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (Size = 50), @p2='?' (Size = 100), @p3='?' (DbType = DateTime2), @p4='?' (Size = 100), @p5='?' (Size = 8), @p6='?' (Size = 50), @p7='?' (DbType = DateTime2), @p8='?' (Size = 50), @p9='?' (Size = 100), @p10='?' (DbType = DateTime2), @p11='?' (Size = 100), @p12='?' (Size = 8), @p13='?' (Size = 50), @p14='?' (DbType = DateTime2), @p15='?' (Size = 50), @p16='?' (Size = 100), @p17='?' (DbType = DateTime2), @p18='?' (Size = 100), @p19='?' (Size = 8), @p20='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [Users] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, 0),
+(@p7, @p8, @p9, @p10, @p11, @p12, @p13, 1),
+(@p14, @p15, @p16, @p17, @p18, @p19, @p20, 2)) AS i ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role])
+VALUES (i.[CreatedAt], i.[Email], i.[FirstName], i.[LastLogin], i.[LastName], i.[PasswordHash], i.[Role])
+OUTPUT INSERTED.[Id], INSERTED.[IsActive], i._Position;
+2025-11-02 16:37:54.296 +00:00 [INF] Base de datos inicializada exitosamente con 3 usuarios.
+2025-11-02 16:37:54.328 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 16:37:54.344 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 16:37:54.380 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 16:37:54.391 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 16:37:54.391 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 16:37:54.392 +00:00 [INF] Hosting environment: Development
+2025-11-02 16:37:54.393 +00:00 [INF] Content root path: /app
+2025-11-02 16:37:54.886 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:37:54.927 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:37:54.930 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:37:54.941 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:37:54.946 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 61.8229ms
+2025-11-02 16:37:54.953 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:37:54.957 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:37:54.957 +00:00 [INF] Connection id "0HNGQ5OM5SOMI", Request id "0HNGQ5OM5SOMI:00000001": the application completed without reading the entire request body.
+2025-11-02 16:37:55.075 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - application/grpc null
+2025-11-02 16:37:55.078 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:37:55.133 +00:00 [INF] CreateUser llamado para: john@gmail.com
+2025-11-02 16:37:55.251 +00:00 [INF] Executed DbCommand (9ms) [Parameters=[@__request_Email_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__request_Email_0
+2025-11-02 16:37:55.684 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (Size = 50), @p2='?' (Size = 100), @p3='?' (DbType = DateTime2), @p4='?' (Size = 100), @p5='?' (Size = 4000), @p6='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role])
+OUTPUT INSERTED.[Id], INSERTED.[IsActive]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-11-02 16:37:55.709 +00:00 [ERR] An exception occurred in the database while saving changes for context type 'UserService.gRPC.Data.UserDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$11$X'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:462948a1-db30-438a-ac5f-4ac2daeedb14
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$11$X'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:462948a1-db30-438a-ac5f-4ac2daeedb14
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-11-02 16:37:55.714 +00:00 [ERR] Error al crear usuario.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$11$X'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:462948a1-db30-438a-ac5f-4ac2daeedb14
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at UserService.gRPC.Services.UserGrpcService.CreateUser(CreateUserRequest request, ServerCallContext context) in /src/Services/UserGrpcService.cs:line 210
+2025-11-02 16:37:55.731 +00:00 [INF] Error status code '"Internal"' with detail 'Error interno al procesar la solicitud' raised.
+2025-11-02 16:37:55.733 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:37:55.738 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - 200 0 application/grpc 662.9853ms
+2025-11-02 16:37:55.743 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:37:55.744 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 790.7329ms
+2025-11-02 16:38:19.660 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:38:19.661 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:38:19.661 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:38:19.662 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:38:19.662 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 2.7164ms
+2025-11-02 16:38:19.663 +00:00 [INF] Connection id "0HNGQ5OM5SOMJ", Request id "0HNGQ5OM5SOMJ:00000001": the application completed without reading the entire request body.
+2025-11-02 16:38:19.665 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:38:19.666 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:38:19.671 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - application/grpc null
+2025-11-02 16:38:19.673 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:38:19.678 +00:00 [INF] CreateUser llamado para: john@gmail.com
+2025-11-02 16:38:19.743 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_Email_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__request_Email_0
+2025-11-02 16:38:20.099 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (Size = 50), @p2='?' (Size = 100), @p3='?' (DbType = DateTime2), @p4='?' (Size = 100), @p5='?' (Size = 4000), @p6='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role])
+OUTPUT INSERTED.[Id], INSERTED.[IsActive]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-11-02 16:38:20.104 +00:00 [ERR] An exception occurred in the database while saving changes for context type 'UserService.gRPC.Data.UserDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$11$.'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:462948a1-db30-438a-ac5f-4ac2daeedb14
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$11$.'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:462948a1-db30-438a-ac5f-4ac2daeedb14
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-11-02 16:38:20.109 +00:00 [ERR] Error al crear usuario.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): String or binary data would be truncated in table 'ECommerceGRPC.dbo.Users', column 'PasswordHash'. Truncated value: '$2a$11$.'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:462948a1-db30-438a-ac5f-4ac2daeedb14
+Error Number:2628,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at UserService.gRPC.Services.UserGrpcService.CreateUser(CreateUserRequest request, ServerCallContext context) in /src/Services/UserGrpcService.cs:line 210
+2025-11-02 16:38:20.118 +00:00 [INF] Error status code '"Internal"' with detail 'Error interno al procesar la solicitud' raised.
+2025-11-02 16:38:20.119 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:38:20.121 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - 200 0 application/grpc 449.8621ms
+2025-11-02 16:38:20.125 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:38:20.126 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 461.2728ms
+2025-11-02 16:38:26.170 +00:00 [INF] Application is shutting down...
+2025-11-02 16:38:56.219 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 16:38:56.598 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 16:38:58.539 +00:00 [INF] Executed DbCommand (608ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [ECommerceGRPC];
+2025-11-02 16:38:58.738 +00:00 [INF] Executed DbCommand (192ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [ECommerceGRPC] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2025-11-02 16:38:58.771 +00:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:38:58.860 +00:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [Email] nvarchar(50) NOT NULL,
+    [FirstName] nvarchar(100) NOT NULL,
+    [LastName] nvarchar(100) NOT NULL,
+    [PasswordHash] nvarchar(8) NOT NULL,
+    [Role] nvarchar(50) NOT NULL,
+    [CreatedAt] datetime2 NOT NULL DEFAULT (GETUTCDATE()),
+    [LastLogin] datetime2 NULL,
+    [IsActive] bit NOT NULL DEFAULT CAST(1 AS bit),
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+2025-11-02 16:38:58.866 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_Email] ON [Users] ([Email]);
+2025-11-02 16:38:58.870 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_IsActive] ON [Users] ([IsActive]);
+2025-11-02 16:38:58.873 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_Role] ON [Users] ([Role]);
+2025-11-02 16:38:58.907 +00:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:38:58.924 +00:00 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 16:38:59.235 +00:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 16:38:59.260 +00:00 [INF] Inicializando base de datos con datos de prueba...
+2025-11-02 16:38:59.509 +00:00 [INF] Executed DbCommand (27ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (Size = 50), @p2='?' (Size = 100), @p3='?' (DbType = DateTime2), @p4='?' (Size = 100), @p5='?' (Size = 8), @p6='?' (Size = 50), @p7='?' (DbType = DateTime2), @p8='?' (Size = 50), @p9='?' (Size = 100), @p10='?' (DbType = DateTime2), @p11='?' (Size = 100), @p12='?' (Size = 8), @p13='?' (Size = 50), @p14='?' (DbType = DateTime2), @p15='?' (Size = 50), @p16='?' (Size = 100), @p17='?' (DbType = DateTime2), @p18='?' (Size = 100), @p19='?' (Size = 8), @p20='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [Users] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, 0),
+(@p7, @p8, @p9, @p10, @p11, @p12, @p13, 1),
+(@p14, @p15, @p16, @p17, @p18, @p19, @p20, 2)) AS i ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role])
+VALUES (i.[CreatedAt], i.[Email], i.[FirstName], i.[LastLogin], i.[LastName], i.[PasswordHash], i.[Role])
+OUTPUT INSERTED.[Id], INSERTED.[IsActive], i._Position;
+2025-11-02 16:38:59.539 +00:00 [INF] Base de datos inicializada exitosamente con 3 usuarios.
+2025-11-02 16:38:59.572 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 16:38:59.585 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 16:38:59.618 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 16:38:59.632 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 16:38:59.635 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 16:38:59.636 +00:00 [INF] Hosting environment: Development
+2025-11-02 16:38:59.637 +00:00 [INF] Content root path: /app
+2025-11-02 16:39:28.343 +00:00 [INF] Application is shutting down...
+2025-11-02 16:39:30.033 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 16:39:30.449 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 16:39:31.716 +00:00 [INF] Executed DbCommand (66ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:39:31.880 +00:00 [INF] Executed DbCommand (120ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2025-11-02 16:39:31.915 +00:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:39:31.924 +00:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 16:39:32.216 +00:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 16:39:32.264 +00:00 [INF] Base de datos ya contiene usuarios. Omitiendo inicialización.
+2025-11-02 16:39:32.317 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 16:39:32.343 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 16:39:32.385 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 16:39:32.396 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 16:39:32.397 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 16:39:32.398 +00:00 [INF] Hosting environment: Development
+2025-11-02 16:39:32.398 +00:00 [INF] Content root path: /app
+2025-11-02 16:40:39.846 +00:00 [INF] Application is shutting down...
+2025-11-02 16:41:12.912 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 16:41:13.360 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 16:41:14.972 +00:00 [INF] Executed DbCommand (514ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [ECommerceGRPC];
+2025-11-02 16:41:15.183 +00:00 [INF] Executed DbCommand (203ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [ECommerceGRPC] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2025-11-02 16:41:15.215 +00:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:41:15.331 +00:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [Email] nvarchar(50) NOT NULL,
+    [FirstName] nvarchar(100) NOT NULL,
+    [LastName] nvarchar(100) NOT NULL,
+    [PasswordHash] nvarchar(max) NOT NULL,
+    [Role] nvarchar(50) NOT NULL,
+    [CreatedAt] datetime2 NOT NULL DEFAULT (GETUTCDATE()),
+    [LastLogin] datetime2 NULL,
+    [IsActive] bit NOT NULL DEFAULT CAST(1 AS bit),
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+2025-11-02 16:41:15.335 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_Email] ON [Users] ([Email]);
+2025-11-02 16:41:15.337 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_IsActive] ON [Users] ([IsActive]);
+2025-11-02 16:41:15.340 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_Role] ON [Users] ([Role]);
+2025-11-02 16:41:15.367 +00:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:41:15.382 +00:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 16:41:15.687 +00:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 16:41:15.715 +00:00 [INF] Inicializando base de datos con datos de prueba...
+2025-11-02 16:41:15.933 +00:00 [INF] Executed DbCommand (24ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (Size = 50), @p2='?' (Size = 100), @p3='?' (DbType = DateTime2), @p4='?' (Size = 100), @p5='?' (Size = 4000), @p6='?' (Size = 50), @p7='?' (DbType = DateTime2), @p8='?' (Size = 50), @p9='?' (Size = 100), @p10='?' (DbType = DateTime2), @p11='?' (Size = 100), @p12='?' (Size = 4000), @p13='?' (Size = 50), @p14='?' (DbType = DateTime2), @p15='?' (Size = 50), @p16='?' (Size = 100), @p17='?' (DbType = DateTime2), @p18='?' (Size = 100), @p19='?' (Size = 4000), @p20='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [Users] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, 0),
+(@p7, @p8, @p9, @p10, @p11, @p12, @p13, 1),
+(@p14, @p15, @p16, @p17, @p18, @p19, @p20, 2)) AS i ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role])
+VALUES (i.[CreatedAt], i.[Email], i.[FirstName], i.[LastLogin], i.[LastName], i.[PasswordHash], i.[Role])
+OUTPUT INSERTED.[Id], INSERTED.[IsActive], i._Position;
+2025-11-02 16:41:15.959 +00:00 [INF] Base de datos inicializada exitosamente con 3 usuarios.
+2025-11-02 16:41:15.994 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 16:41:16.013 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 16:41:16.049 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 16:41:16.060 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 16:41:16.061 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 16:41:16.062 +00:00 [INF] Hosting environment: Development
+2025-11-02 16:41:16.063 +00:00 [INF] Content root path: /app
+2025-11-02 16:41:45.577 +00:00 [INF] Application is shutting down...
+2025-11-02 16:41:47.187 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 16:41:47.585 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 16:41:48.568 +00:00 [INF] Executed DbCommand (69ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:41:48.764 +00:00 [INF] Executed DbCommand (171ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2025-11-02 16:41:48.802 +00:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 16:41:48.816 +00:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 16:41:49.234 +00:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 16:41:49.255 +00:00 [INF] Base de datos ya contiene usuarios. Omitiendo inicialización.
+2025-11-02 16:41:49.305 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 16:41:49.336 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 16:41:49.418 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 16:41:49.443 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 16:41:49.446 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 16:41:49.447 +00:00 [INF] Hosting environment: Development
+2025-11-02 16:41:49.447 +00:00 [INF] Content root path: /app
+2025-11-02 16:42:05.152 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:42:05.242 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:42:05.245 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:42:05.249 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:42:05.252 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 105.24ms
+2025-11-02 16:42:05.259 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:42:05.263 +00:00 [INF] Connection id "0HNGQ5R0OG0R1", Request id "0HNGQ5R0OG0R1:00000001": the application completed without reading the entire request body.
+2025-11-02 16:42:05.263 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:42:05.386 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - application/grpc null
+2025-11-02 16:42:05.387 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:42:05.424 +00:00 [INF] CreateUser llamado para: john@gmail.com
+2025-11-02 16:42:05.682 +00:00 [INF] Executed DbCommand (46ms) [Parameters=[@__request_Email_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__request_Email_0
+2025-11-02 16:42:06.326 +00:00 [INF] Executed DbCommand (9ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (Size = 50), @p2='?' (Size = 100), @p3='?' (DbType = DateTime2), @p4='?' (Size = 100), @p5='?' (Size = 4000), @p6='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([CreatedAt], [Email], [FirstName], [LastLogin], [LastName], [PasswordHash], [Role])
+OUTPUT INSERTED.[Id], INSERTED.[IsActive]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-11-02 16:42:06.357 +00:00 [INF] Usuario creado exitosamente con ID: 4
+2025-11-02 16:42:06.369 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:42:06.377 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - 200 null application/grpc 990.7564ms
+2025-11-02 16:42:06.378 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:42:06.379 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 1119.3802ms
+2025-11-02 16:44:03.219 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:44:03.221 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:44:03.221 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:44:03.222 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:44:03.223 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 4.2503ms
+2025-11-02 16:44:03.224 +00:00 [INF] Connection id "0HNGQ5R0OG0R2", Request id "0HNGQ5R0OG0R2:00000001": the application completed without reading the entire request body.
+2025-11-02 16:44:03.228 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:44:03.229 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:44:03.238 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - application/grpc null
+2025-11-02 16:44:03.244 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:44:03.253 +00:00 [INF] CreateUser llamado para: john@gmail.com
+2025-11-02 16:44:03.341 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_Email_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__request_Email_0
+2025-11-02 16:44:03.352 +00:00 [WRN] Usuario con email 'john@gmail.com' ya existe
+2025-11-02 16:44:03.366 +00:00 [INF] Error status code '"AlreadyExists"' with detail 'Ya existe un usuario con el email 'john@gmail.com'' raised.
+2025-11-02 16:44:03.367 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 16:44:03.368 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - 200 0 application/grpc 129.6701ms
+2025-11-02 16:44:03.370 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:44:03.370 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 142.0235ms
+2025-11-02 16:46:14.944 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:46:14.946 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:46:14.946 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 16:46:14.947 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 16:46:14.948 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 3.577ms
+2025-11-02 16:46:14.948 +00:00 [INF] Connection id "0HNGQ5R0OG0R3", Request id "0HNGQ5R0OG0R3:00000001": the application completed without reading the entire request body.
+2025-11-02 16:46:14.950 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 16:46:14.951 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:46:14.955 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/GetUser - application/grpc null
+2025-11-02 16:46:14.956 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/GetUser'
+2025-11-02 16:46:14.963 +00:00 [INF] GetUser llamado para ID: 5
+2025-11-02 16:46:14.985 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_Id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__request_Id_0
+2025-11-02 16:46:14.987 +00:00 [WRN] User con 5 no se encontró
+2025-11-02 16:46:14.988 +00:00 [INF] Error status code '"NotFound"' with detail 'Usuario con ID 5 no existe' raised.
+2025-11-02 16:46:14.989 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/GetUser'
+2025-11-02 16:46:14.990 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/GetUser - 200 0 application/grpc 34.3456ms
+2025-11-02 16:46:14.992 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 16:46:14.993 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 42.8917ms
+2025-11-02 17:04:29.588 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 17:04:29.591 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 17:04:29.592 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 17:04:29.594 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 17:04:29.596 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 7.5059ms
+2025-11-02 17:04:29.597 +00:00 [INF] Connection id "0HNGQ5R0OG0R6", Request id "0HNGQ5R0OG0R6:00000001": the application completed without reading the entire request body.
+2025-11-02 17:04:29.600 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 17:04:29.601 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 17:04:29.609 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/UpdateUser - application/grpc null
+2025-11-02 17:04:29.611 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/UpdateUser'
+2025-11-02 17:04:29.622 +00:00 [INF] UpdateUser llamado para ID: 5
+2025-11-02 17:04:29.868 +00:00 [INF] Executed DbCommand (1ms) [Parameters=[@__request_Id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__request_Id_0
+2025-11-02 17:04:29.870 +00:00 [WRN] Usuario con ID 5 no encontrado
+2025-11-02 17:04:29.872 +00:00 [INF] Error status code '"NotFound"' with detail 'Usuario con ID 5 no existe' raised.
+2025-11-02 17:04:29.872 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/UpdateUser'
+2025-11-02 17:04:29.873 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/UpdateUser - 200 0 application/grpc 263.6697ms
+2025-11-02 17:04:29.876 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 17:04:29.876 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 276.5587ms
+2025-11-02 17:04:48.985 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 17:04:48.986 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 17:04:48.987 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 17:04:48.989 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 17:04:48.990 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 5.3454ms
+2025-11-02 17:04:48.991 +00:00 [INF] Connection id "0HNGQ5R0OG0R7", Request id "0HNGQ5R0OG0R7:00000001": the application completed without reading the entire request body.
+2025-11-02 17:04:48.995 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 17:04:48.996 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 17:04:49.003 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/UpdateUser - application/grpc null
+2025-11-02 17:04:49.004 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/UpdateUser'
+2025-11-02 17:04:49.006 +00:00 [INF] UpdateUser llamado para ID: 4
+2025-11-02 17:04:49.013 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_Id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__request_Id_0
+2025-11-02 17:04:49.043 +00:00 [INF] Executed DbCommand (15ms) [Parameters=[@p1='?' (DbType = Int32), @p0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [Role] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2025-11-02 17:04:49.048 +00:00 [INF] Usuario 4 actualizado exitosamente
+2025-11-02 17:04:49.049 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/UpdateUser'
+2025-11-02 17:04:49.050 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/UpdateUser - 200 null application/grpc 47.1578ms
+2025-11-02 17:04:49.054 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 17:04:49.055 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 60.2953ms
+2025-11-02 17:05:57.335 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 17:05:57.336 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 17:05:57.337 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 17:05:57.337 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 17:05:57.338 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 3.359ms
+2025-11-02 17:05:57.339 +00:00 [INF] Connection id "0HNGQ5R0OG0R8", Request id "0HNGQ5R0OG0R8:00000001": the application completed without reading the entire request body.
+2025-11-02 17:05:57.341 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 17:05:57.342 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 17:05:57.347 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 17:05:57.348 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 6.9887ms
+2025-11-02 17:07:30.778 +00:00 [INF] Application is shutting down...
+2025-11-02 17:07:32.415 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 17:07:32.920 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 17:07:33.998 +00:00 [INF] Executed DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 17:07:34.070 +00:00 [INF] Executed DbCommand (35ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2025-11-02 17:07:34.102 +00:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 17:07:34.116 +00:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 17:07:34.502 +00:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 17:07:34.524 +00:00 [INF] Base de datos ya contiene usuarios. Omitiendo inicialización.
+2025-11-02 17:07:34.556 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 17:07:34.569 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 17:07:34.619 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 17:07:34.634 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 17:07:34.634 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 17:07:34.635 +00:00 [INF] Hosting environment: Development
+2025-11-02 17:07:34.636 +00:00 [INF] Content root path: /app
+2025-11-02 17:07:41.164 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 17:07:41.237 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 17:07:41.240 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 17:07:41.244 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 17:07:41.247 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 88.6512ms
+2025-11-02 17:07:41.254 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 17:07:41.256 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 17:07:41.256 +00:00 [INF] Connection id "0HNGQ69AH61E9", Request id "0HNGQ69AH61E9:00000001": the application completed without reading the entire request body.
+2025-11-02 17:07:41.366 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - application/grpc null
+2025-11-02 17:07:41.367 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 17:07:41.428 +00:00 [INF] CreateUser llamado para: john@gmail.com
+2025-11-02 17:07:41.562 +00:00 [INF] Executed DbCommand (11ms) [Parameters=[@__request_Email_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__request_Email_0
+2025-11-02 17:07:41.627 +00:00 [WRN] Usuario con email 'john@gmail.com' ya existe
+2025-11-02 17:07:41.638 +00:00 [INF] Error status code '"AlreadyExists"' with detail 'Ya existe un usuario con el email 'john@gmail.com'' raised.
+2025-11-02 17:07:41.641 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/CreateUser'
+2025-11-02 17:07:41.648 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/CreateUser - 200 0 application/grpc 282.6409ms
+2025-11-02 17:07:41.651 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 17:07:41.652 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 398.6607ms
+2025-11-02 17:07:47.737 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 17:07:47.738 +00:00 [INF] Executing endpoint 'gRPC - Unimplemented service'
+2025-11-02 17:07:47.739 +00:00 [INF] Service 'grpc.reflection.v1.ServerReflection' is unimplemented.
+2025-11-02 17:07:47.740 +00:00 [INF] Executed endpoint 'gRPC - Unimplemented service'
+2025-11-02 17:07:47.741 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1.ServerReflection/ServerReflectionInfo - 200 0 application/grpc 3.9993ms
+2025-11-02 17:07:47.741 +00:00 [INF] Connection id "0HNGQ69AH61EA", Request id "0HNGQ69AH61EA:00000001": the application completed without reading the entire request body.
+2025-11-02 17:07:47.743 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - application/grpc null
+2025-11-02 17:07:47.744 +00:00 [INF] Executing endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 17:07:47.749 +00:00 [INF] Request starting HTTP/2 POST http://localhost:7002/userservice.UserService/DeleteUser - application/grpc null
+2025-11-02 17:07:47.752 +00:00 [INF] Executing endpoint 'gRPC - /userservice.UserService/DeleteUser'
+2025-11-02 17:07:47.762 +00:00 [INF] DeleteUser llamado para ID: 4
+2025-11-02 17:07:47.849 +00:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_Id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FirstName], [u].[IsActive], [u].[LastLogin], [u].[LastName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__request_Id_0
+2025-11-02 17:07:48.018 +00:00 [INF] Executed DbCommand (15ms) [Parameters=[@p1='?' (DbType = Int32), @p0='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [IsActive] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2025-11-02 17:07:48.041 +00:00 [INF] Usuario 4 eliminado exitosamente (lógico)
+2025-11-02 17:07:48.050 +00:00 [INF] Executed endpoint 'gRPC - /userservice.UserService/DeleteUser'
+2025-11-02 17:07:48.052 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/userservice.UserService/DeleteUser - 200 null application/grpc 302.0131ms
+2025-11-02 17:07:48.056 +00:00 [INF] Executed endpoint 'gRPC - /grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo'
+2025-11-02 17:07:48.057 +00:00 [INF] Request finished HTTP/2 POST http://localhost:7002/grpc.reflection.v1alpha.ServerReflection/ServerReflectionInfo - 200 null application/grpc 313.8728ms
+2025-11-02 17:19:31.457 +00:00 [INF] Application is shutting down...
+2025-11-02 17:19:33.027 +00:00 [INF] Iniciando UserService gRPC...
+2025-11-02 17:19:33.463 +00:00 [INF] Verificando existencia de base de datos...
+2025-11-02 17:19:34.600 +00:00 [INF] Executed DbCommand (60ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 17:19:34.739 +00:00 [INF] Executed DbCommand (92ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2025-11-02 17:19:34.771 +00:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-11-02 17:19:34.782 +00:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-11-02 17:19:35.305 +00:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-11-02 17:19:35.340 +00:00 [INF] Base de datos ya contiene usuarios. Omitiendo inicialización.
+2025-11-02 17:19:35.368 +00:00 [INF] UserService gRPC iniciado exitosamente en puerto 7002
+2025-11-02 17:19:35.381 +00:00 [WRN] Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:7002'.
+2025-11-02 17:19:35.441 +00:00 [WRN] Overriding address(es) 'http://+:7002'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2025-11-02 17:19:35.464 +00:00 [INF] Now listening on: http://0.0.0.0:7002
+2025-11-02 17:19:35.465 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-02 17:19:35.466 +00:00 [INF] Hosting environment: Development
+2025-11-02 17:19:35.467 +00:00 [INF] Content root path: /app
