@@ -31,3 +31,8 @@ grpcurl -plaintext -d '{\"id\":4 , \"email\": \"john@gmail.com\", \"first_name\"
 Eliminado lógico de un usuario por su id:
 
 grpcurl -plaintext -d '{\"id\":4}' localhost:7002 userservice.UserService/DeleteUser
+
+
+Busca por el término john en email y firstname:
+
+grpcurl -plaintext -d '{\"search_term\": \"john\",\"page_number\": 1, \"page_size\": 10}' localhost:7002 userservice.UserService/SearchUsers

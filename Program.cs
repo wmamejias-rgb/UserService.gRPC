@@ -44,7 +44,8 @@ try
     builder.Services.AddScoped<IValidator<CreateUserRequest>, CreateUserRequestValidator>();
     builder.Services.AddScoped<IValidator<UpdateUserRequest>, UpdateUserRequestValidator>();
     builder.Services.AddScoped<IValidator<DeleteUserRequest>, DeleteUserRequestValidator>();
-    
+    builder.Services.AddScoped<IValidator<SearchUsersRequest>, SearchUsersRequestValidator>();
+
 
     // Registrar servicios gRPC
     builder.Services.AddGrpc(options =>
@@ -109,6 +110,7 @@ try
             "CreateUser - Crea un nuevo usuario",
             "UpdateUser - Actualiza un usuario existente",
             "DeleteUser - Elimina un usuario (lógico)",
+            "SearchUsers - Busqueda por término en email y firstname"
         },
         grpcPort = 7002,
         healthCheck = "/health"

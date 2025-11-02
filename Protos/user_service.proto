@@ -22,7 +22,7 @@ rpc UpdateUser(UpdateUserRequest) returns (UserResponse);
 rpc DeleteUser(DeleteUserRequest)  returns (DeleteUserResponse);
 
 //Busca usuarios por email o nombre // Server Streaming
-rpc SearchUsers(SearchUsersRequest)  return (stream UserResponse);
+rpc SearchUsers(SearchUsersRequest)  returns (stream UserResponse);
 
 
 }

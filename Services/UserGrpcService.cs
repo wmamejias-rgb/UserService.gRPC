@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using UserService.gRPC.Data;
 using UserService.gRPC.Models;
+using UserService.gRPC.Validators;
 using BC = BCrypt.Net.BCrypt;
 
 namespace UserService.gRPC.Services
@@ -20,7 +21,7 @@ namespace UserService.gRPC.Services
         private readonly IValidator<CreateUserRequest> _createUserValidator;
         private readonly IValidator<UpdateUserRequest> _updateUserValidator;
         private readonly IValidator<DeleteUserRequest> _deleteUserValidator;
-        private readonly IValidator<SearchUsersRequest> _searchUserValidator;
+        private readonly IValidator<SearchUsersRequest> _searchUsersValidator;
 
 
         public UserGrpcService(
@@ -30,7 +31,8 @@ namespace UserService.gRPC.Services
             IValidator<GetUsersRequest> getUsersValidator,
             IValidator<CreateUserRequest> createUserValidator,
             IValidator<UpdateUserRequest> updateUserValidator,
-            IValidator<DeleteUserRequest> deleteUserValidator
+            IValidator<DeleteUserRequest> deleteUserValidator,
+            IValidator<SearchUsersRequest> searchUsersValidator
             )
         {
 
@@ -41,7 +43,7 @@ namespace UserService.gRPC.Services
             _createUserValidator = createUserValidator;
             _updateUserValidator = updateUserValidator; 
             _deleteUserValidator = deleteUserValidator; 
-
+            _searchUsersValidator = searchUsersValidator; 
 
         }
         /// <summary>
@@ -141,7 +143,7 @@ namespace UserService.gRPC.Services
                 _logger.LogInformation($"Se encontraron {usuarios.Count} usuarios");
 
                 // Enviar usuarios en streaming
-                foreach (var product in usuarios)
+                foreach (var usuario in usuarios)
                 {
                     if (context.CancellationToken.IsCancellationRequested)
                     {
@@ -149,7 +151,7 @@ namespace UserService.gRPC.Services
                         break;
                     }
 
-                    var response = MapToUserResponse(product);
+                    var response = MapToUserResponse(usuario);
                     await responseStream.WriteAsync(response);
                 }
 
@@ -344,6 +346,77 @@ namespace UserService.gRPC.Services
             }
 
         }
+
+
+        public override async Task SearchUsers ( SearchUsersRequest request ,
+                        IServerStreamWriter<UserResponse> responseStream,
+                        ServerCallContext context  )
+        {
+
+            try
+            {
+                _logger.LogInformation($"SearchUsers llamado con término: '{request.SearchTerm}'");
+
+                // Validar solicitud
+                var validationResult = await _searchUsersValidator.ValidateAsync(request);
+                if (!validationResult.IsValid)
+                {
+                    var errors = string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage));
+                    _logger.LogWarning($"Validación fallida: {errors}");
+                    throw new RpcException(new Status(StatusCode.InvalidArgument, errors));
+                }
+
+                // Construir query de búsqueda
+                var searchTerm = request.SearchTerm.ToLower();
+                var query = _context.Users
+                    .Where(u => u.IsActive &&
+                        (u.Email.ToLower().Contains(searchTerm) ||
+                         u.FirstName.ToLower().Contains(searchTerm) ));
+
+                // Ordenar por relevancia (nombre primero)
+                query = query.OrderBy(p => p.FirstName.ToLower().Contains(searchTerm) ? 0 : 1)
+                    .ThenBy(p => p.FirstName);
+
+                // Aplicar paginación
+                var pageNumber = request.PageNumber > 0 ? request.PageNumber : 1;
+                var pageSize = request.PageSize > 0 ? request.PageSize : 10;
+                var skip = (pageNumber - 1) * pageSize;
+
+                var usuarios = await query
+                    .Skip(skip)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+                _logger.LogInformation($"Búsqueda encontró {usuarios.Count} usuarios");
+
+                // Enviar resultados en streaming
+                foreach (var usuario in usuarios)
+                {
+                    if (context.CancellationToken.IsCancellationRequested)
+                    {
+                        _logger.LogWarning("SearchUsers cancelado por el cliente");
+                        break;
+                    }
+
+                    var response = MapToUserResponse(usuario);
+                    await responseStream.WriteAsync(response);
+                }
+
+                _logger.LogInformation($"SearchUsers completado - {usuarios.Count} resultados enviados");
+            }
+            catch (RpcException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al buscar usuarios");
+                throw new RpcException(new Status(StatusCode.Internal,
+                    "Error interno al procesar la solicitud"));
+            }
+
+        }
+
 
 
         /// <summary>
