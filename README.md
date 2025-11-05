@@ -1,22 +1,22 @@
 # TAREA 1 - UserService.gRPC
-	Eduardo González Bustos <egonzalezb@Poder-Judicial.go.cr>
-	Erick Walsh Pizarro <ewalsh@Poder-Judicial.go.cr>
-	Wendy Mejías Acevedo <wmejias@Poder-Judicial.go.cr>
+	EGB
+	EWP
+	WMA
 
 
-## Ejecutar proyecto y creación de contenedores
+## Ejecutar proyecto y creaciÃ³n de contenedores
 En la carpeta del proyecto UserService.gRPC ejecutar en ventana de PowerShell o Command Prompt:
 
 docker-compose up -d
 
 
-## Testing de los métodos del servicio usando comando grpcurl
+## Testing de los mÃ©todos del servicio usando comando grpcurl
 
 Obtiene un usuario por su id:
 
 grpcurl -plaintext -d '{\"id\": 1}' localhost:7002 userservice.UserService/GetUser
 
-Obtiene un listado de usuario con paginación:
+Obtiene un listado de usuario con paginaciÃ³n:
 
 grpcurl -plaintext -d '{\"page_number\": 1, \"page_size\": 10}' localhost:7002 userservice.UserService/GetUsers
 
@@ -28,11 +28,11 @@ Actualiza un usuario en particular:
 
 grpcurl -plaintext -d '{\"id\":4 , \"email\": \"john@gmail.com\", \"first_name\": \"John\", \"last_name\": \"Smith\", \"role\": \"Premium\"}' localhost:7002 userservice.UserService/UpdateUser
 
-Eliminado lógico de un usuario por su id:
+Eliminado lÃ³gico de un usuario por su id:
 
 grpcurl -plaintext -d '{\"id\":4}' localhost:7002 userservice.UserService/DeleteUser
 
 
-Busca por el término john en email y firstname:
+Busca por el tÃ©rmino john en email y firstname:
 
 grpcurl -plaintext -d '{\"search_term\": \"john\",\"page_number\": 1, \"page_size\": 10}' localhost:7002 userservice.UserService/SearchUsers
