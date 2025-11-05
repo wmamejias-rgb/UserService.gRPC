@@ -41,7 +41,7 @@ namespace UserService.gRPC.Data
                         FirstName = "Wendy",
                         LastName = "Mejías Acevedo",
                         Role = "Customer",
-                        PasswordHash = "12345678",
+                        PasswordHash = BCrypt.Net.BCrypt.HashPassword("12345678"),
                         CreatedAt = DateTime.UtcNow,
                         LastLogin = DateTime.UtcNow,
                         IsActive = true
@@ -52,7 +52,7 @@ namespace UserService.gRPC.Data
                         FirstName = "Eduardo",
                         LastName = "Gonzalez Bustos",
                         Role = "Admin",
-                        PasswordHash = "12345678",
+                        PasswordHash = BCrypt.Net.BCrypt.HashPassword("12345678"),
                         CreatedAt = DateTime.UtcNow,
                         LastLogin = DateTime.UtcNow,
                         IsActive = true
@@ -63,7 +63,7 @@ namespace UserService.gRPC.Data
                         FirstName = "Erick",
                         LastName = "Walsh Pizarro",
                         Role = "Premium",
-                        PasswordHash = "12345678",
+                        PasswordHash = BCrypt.Net.BCrypt.HashPassword("12345678"),
                         CreatedAt = DateTime.UtcNow,
                         LastLogin = DateTime.UtcNow,
                         IsActive = true
